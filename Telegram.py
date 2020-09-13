@@ -73,7 +73,7 @@ class Telegram(AliceSkill):
 			self.logWarning(f'An unknown user texted me! There is not user permitted, is it you? If so, add your id to my settings! Name and id: {fromName}/{chatId}')
 			return
 
-		allowedUsers = [userId for userId in allowedUsers.split(',')]
+		allowedUsers = [userId.strip() for userId in allowedUsers.split(',')]
 		if str(chatId) not in allowedUsers:
 			self.logWarning(f'An unknown user texted me! His name and id: {fromName}/{chatId}')
 			return
