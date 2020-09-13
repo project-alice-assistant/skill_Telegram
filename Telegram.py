@@ -27,6 +27,8 @@ class Telegram(AliceSkill):
 
 
 	def onStart(self):
+		super().onStart()
+
 		if not self.getConfig('token'):
 			raise SkillStartingFailed(skillName=self._name, error='Please provide your bot token in the skill settings')
 
@@ -65,6 +67,17 @@ class Telegram(AliceSkill):
 
 		chatId = message['chat']['id']
 		fromName = message['from']['first_name']
+
+		allowedUsers = self.getConfig('allowedUsers')
+		if not allowedUsers:
+			self.logWarning(f'An unknown user texted me! There is not user permitted, is it you? If so, add your id to my settings! Name and id: {fromName}/{chatId}')
+			return
+
+		allowedUsers = [userId for userId in allowedUsers.split(',')]
+		if str(chatId) not in allowedUsers:
+			self.logWarning(f'An unknown user texted me! His name and id: {fromName}/{chatId}')
+			return
+
 		siteId = str(chatId)
 		self._chats.append(siteId)
 
