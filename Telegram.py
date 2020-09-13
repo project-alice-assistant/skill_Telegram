@@ -20,9 +20,9 @@ class Telegram(AliceSkill):
 
 	def __init__(self):
 		super().__init__()
-		self._bot: Optional[telepot.Bot] = None
-		self._me: Optional[Dict] = None
-		self._loop: Optional[MessageLoop] = None
+		self._bot = None
+		self._me = None
+		self._loop = None
 		self._chats: List = list()
 
 
