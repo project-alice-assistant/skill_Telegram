@@ -1,29 +1,21 @@
 {
-    "name": "Telegram",
-    "version": "0.0.1",
-    "icon": "fab fa-battle-net",
-    "category": "undefined",
-    "author": "Psychokiller1888",
-    "maintainers": [],
-    "desc": "Missing description",
-    "aliceMinVersion": "1.0.0-b3",
-    "systemRequirements": [
-        "libreadline-dev",
-        "libconfig-dev",
-        "libssl-dev",
-        "lua5.2",
-        "liblua5.2-dev",
-        "libevent0dev",
-        "make"
+    "name"              : "Telegram",
+    "version"           : "0.0.1",
+    "icon"              : "fab fa-telegram",
+    "category"          : "undefined",
+    "author"            : "Psychokiller1888",
+    "maintainers"       : [],
+    "desc"              : "Chat with Alice directly from your mobile device with the `privacy first` app Telegram",
+    "aliceMinVersion"   : "1.0.0-b3",
+    "systemRequirements": [],
+    "pipRequirements"   : [
+        "telepot==12.7"
     ],
-    "pipRequirements": [
-        ""
-    ],
-    "conditions": {
-        "lang": [
+    "conditions"        : {
+        "lang"               : [
             "en"
         ],
-        "online": true,
+        "online"             : true,
         "asrArbitraryCapture": true
     }
 }

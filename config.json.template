@@ -1,0 +1,9 @@
+{
+	"token": {
+		"defaultValue": "",
+		"dataType"    : "string",
+		"isSensitive" : true,
+		"description" : "Your Telegram bot secret token",
+		"category"    : "credentials"
+	}
+}
