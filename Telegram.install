@@ -1,0 +1,29 @@
+{
+    "name": "Telegram",
+    "version": "0.0.1",
+    "icon": "fab fa-battle-net",
+    "category": "undefined",
+    "author": "Psychokiller1888",
+    "maintainers": [],
+    "desc": "Missing description",
+    "aliceMinVersion": "1.0.0-b3",
+    "systemRequirements": [
+        "libreadline-dev",
+        "libconfig-dev",
+        "libssl-dev",
+        "lua5.2",
+        "liblua5.2-dev",
+        "libevent0dev",
+        "make"
+    ],
+    "pipRequirements": [
+        ""
+    ],
+    "conditions": {
+        "lang": [
+            "en"
+        ],
+        "online": true,
+        "asrArbitraryCapture": true
+    }
+}
