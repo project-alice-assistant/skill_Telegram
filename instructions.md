@@ -21,11 +21,10 @@ Obviously, this skill replaces your physical voice, so it won't add new actions 
 - You can now search your bot in Telegram and start chatting with her!
 
 ### Permissions
-You don't want people to find your bot and start messing with your homw do you? So, by default, there's no user allowed. As of now, text your bot anything. Alice will detect it, but won't let it through, but instead print, on the console, your user id! Copy that user id and insert it in the skill settings.
+You don't want people to find your bot and start messing with your homw do you? So, by default, there's no user allowed. As of now, text your bot anything. Alice will detect it, but won't let it through but will ask you if you allow that new user.
 
 ### What now?
 Well.. Now you can just send message from your app or your browser to Alice, even when you're out in the wild! Want your bath ready whe nyou get home? Text her from work before you leave! Enjoy!
 
 ### What's next
-- Voice support for new users
 - Better multisession

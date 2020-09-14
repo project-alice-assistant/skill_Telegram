@@ -5,12 +5,5 @@
 		"isSensitive" : true,
 		"description" : "Your Telegram bot secret token",
 		"category"    : "credentials"
-	},
-	"allowedUsers": {
-		"defaultValue": "",
-		"dataType"    : "string",
-		"isSensitive" : false,
-		"description" : "A list of authorized user ids, separated by commas",
-		"category"    : "system"
 	}
 }

@@ -1,1 +1,22 @@
-{}
+{
+	"unknownUser": [
+		"An unknown user is texting me! His name is \"{}\". Do you want me to add it to your permitted users?",
+		"Just got a text from an unknown user! His name is \"{}\". Shall I add it to your permitted users?",
+		"Someone I don't know sent me a text message. His name is \"{}\". Do you wish to allow that user to text me?"
+	],
+	"okAdded": [
+		"Ok, I just added this user!",
+		"Sure, added the user to permitted users.",
+		"Done!"
+	],
+	"okNotAdded": [
+		"Sure, this user won't be able to text me!",
+		"Ok, no texts from this user!"
+	],
+	"whitelisted": [
+		"Hello {}! You've been whitelisted and are now allowed to text me!"
+	],
+	"blacklisted": [
+		"{}... You've been blacklisted and are not allowed to text me. Don't do it again please!"
+	]
+}
