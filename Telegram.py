@@ -165,6 +165,16 @@ class Telegram(AliceSkill):
 			return
 
 		siteId = str(chatId)
+
+		# Let's make a couple of funny things :)
+
+		if message['text'] == '❤':
+			self.sendMessage(chatId, '❤❤ you too!')
+		elif message['text'] == '😍':
+			self.sendMessage(chatId, '😘')
+		elif message['text'] == '😘':
+			self.sendMessage(chatId, '😍')
+
 		self._chats.append(siteId)
 
 		session = self.DialogManager.newSession(siteId=siteId, user=fromName)
