@@ -21,10 +21,13 @@ Obviously, this skill replaces your physical voice, so it won't add new actions 
 - You can now search your bot in Telegram and start chatting with her!
 
 ### Permissions
-You don't want people to find your bot and start messing with your homw do you? So, by default, there's no user allowed. As of now, text your bot anything. Alice will detect it, but won't let it through but will ask you if you allow that new user.
+You don't want people to find your bot and start messing with your homw do you? So, by default, there's no user allowed. Text something to Alice. Alice will detect it, but won't let it through but will ask you if you allow that new user.
+
+### I have audio inactive on my main unit, how to I add my permissions?
+Text something to Alice, and head for your logs on the interface. She should have alerted you that someone unknown is texting her, giving you a username and user id combo, something like `Psycho/12345678`. Copy that combo and go for the skill settings. Paste it in the whitelist setting.
 
 ### What now?
-Well.. Now you can just send message from your app or your browser to Alice, even when you're out in the wild! Want your bath ready whe nyou get home? Text her from work before you leave! Enjoy!
+Well.. Now you can just send message from your app or your browser to Alice, even when you're out in the wild! Want your bath ready when you get home? Text her from work before you leave! Enjoy!
 
 ### What's next
 - Better multisession

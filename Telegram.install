@@ -1,6 +1,6 @@
 {
     "name"              : "Telegram",
-    "version"           : "1.2.2",
+    "version"           : "1.3.0",
     "icon"              : "fab fa-telegram",
     "category"          : "automation",
     "author"            : "Psycho",
@@ -14,11 +14,9 @@
     "conditions"        : {
         "lang"               : [
             "en",
-            "fr",
-            "de",
-            "it"
+			"fr"
         ],
         "online"             : true,
-        "asrArbitraryCapture": true
+        "asrArbitraryCapture": false
     }
 }

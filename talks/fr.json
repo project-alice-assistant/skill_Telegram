@@ -1,0 +1,26 @@
+{
+	"unknownUser": [
+		"Un utilisateur inconnu m'écrit! Son nom est \"{}\". Est-ce que tu veux l'ajouter aux utilisateurs autorisés?",
+		"Je viens de recevoir un message d'une personne inconnue! Son nom est \"{}\". Je l'ajoute aux utilisateurs autorisés?",
+		"Y'a quelqu'un qui m'envoie un message texte. Son nom est \"{}\". Je l'ajoute aux utilisateurs autorisés?"
+	],
+	"okAdded": [
+		"Ok, je l'ai rajouté.",
+		"C'est fait!"
+	],
+	"okNotAdded": [
+		"Ok, je le bloque.",
+		"Ok, il pourra pas m'écrire!"
+	],
+	"whitelisted": [
+		"Salut {}! Tu as été ajouté à la liste des utilisateurs autorisés à m'écrire!"
+	],
+	"blacklisted": [
+		"{}... Tu as été passé en liste noir, tu n'as pas le droit de m'écrire. Ne recommence pas s'il te plait..."
+	],
+	"greet": [
+		"Salut {}!",
+		"Hello {}!",
+		"Hey {}!"
+	]
+}

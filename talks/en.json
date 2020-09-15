@@ -18,5 +18,10 @@
 	],
 	"blacklisted": [
 		"{}... You've been blacklisted and are not allowed to text me. Don't do it again please!"
+	],
+	"greet": [
+		"Hello {}!",
+		"Hi {}!",
+		"Hey {}!"
 	]
 }

@@ -1,0 +1,25 @@
+{
+	"greetingForms": {
+		"en": [
+			"hi",
+			"hello",
+			"sup!",
+			"hey!",
+			"hey there!",
+			"hi there!",
+			"zup!",
+			"what's up",
+			"good morning",
+			"good afternoon",
+			"good evening"
+		],
+		"fr": [
+			"hello",
+			"salut",
+			"bonjour",
+			"waza!",
+			"sup!",
+			"hep!"
+		]
+	}
+}
