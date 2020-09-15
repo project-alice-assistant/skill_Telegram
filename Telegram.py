@@ -1,11 +1,12 @@
 import json
 from datetime import datetime, timezone
-from typing import List
+from typing import Dict, List
 
 import telepot
 from paho.mqtt.client import MQTTMessage
 from telepot.loop import MessageLoop
 
+from .model.TelegramUser import TelegramUser
 from core.ProjectAliceExceptions import SkillStartingFailed
 from core.base.model.AliceSkill import AliceSkill
 from core.base.model.Intent import Intent
@@ -170,7 +171,6 @@ class Telegram(AliceSkill):
 		siteId = str(chatId)
 
 		# Let's make a couple of funny things :)
-
 		if message['text'] == '❤':
 			self.sendMessage(chatId, '❤❤ you too!')
 		elif message['text'] == '😍':
@@ -215,3 +215,57 @@ class Telegram(AliceSkill):
 
 	def sendMessage(self, chatId: str, message: str):
 		self._bot.sendMessage(chat_id=chatId, text=message)
+
+
+	def refreshDatabase(self):
+		# Only triggered by config update!!
+		users: Dict[int, TelegramUser] = dict()
+
+		whitelisted = self.getConfig('whitelist')
+		blacklisted = self.getConfig('blacklist')
+		whitelist = self.createUserList(whitelisted, False)
+		blacklist = self.createUserList(blacklisted, False)
+		users = {**users, **whitelist}
+		users = {**users, **blacklist}
+
+		# Check if what we have in config is what we have in db
+		# First, did we add a new user into one of the lists?
+		for userid, user in users.items():
+			if not self.databaseFetch(tableName='users', query='SELECT * FROM :__table__ WHERE userId = :userId', values={'userId': userid}):
+				# We have a missing user, config was manually changed
+				self.databaseInsert(
+					tableName='users',
+					values={
+						'userId'      : userid,
+						'userName'    : user.username,
+						'userLastName': '',
+						'blacklisted' : user.banned
+					}
+				)
+
+		# Or did we remove one?
+		for user in self.databaseFetch(tableName='users', query='SELECT * FROM :__table__', method='all'):
+			if (user['blacklisted'] == 1 and user['userId'] not in blacklist) or (user['blacklisted'] == 0 and user['userId'] not in whitelist):
+				# We have a removed user, config was manually changed
+				self.DatabaseManager.delete(
+					tablename='users',
+					callerName=self.name,
+					values={
+						'userId': user['userId']
+					}
+				)
+
+
+	def createUserList(self, baseString: str, isBlacklist: bool) -> dict:
+		users = dict()
+		for data in baseString.split(','):
+			try:
+				username = data.split('/')[0]
+				userid = int(data.split('/')[1])
+			except:
+				self.logWarning(f'Wrong list format: {data}')
+				continue
+
+			users[userid] = TelegramUser(username, userid, 1 if isBlacklist else 0)
+
+		return users

@@ -5,5 +5,21 @@
 		"isSensitive" : true,
 		"description" : "Your Telegram bot secret token",
 		"category"    : "credentials"
+	},
+	"whitelist": {
+		"defaultValue": "",
+		"dataType"    : "string",
+		"isSensitive" : false,
+		"description" : "A comma separated list of username/userid combo allowed to text Alice. Exemple: Psycho/12345678, Alice/87654321",
+		"category"    : "system",
+		"onUpdate"    : "refreshDatabase"
+	},
+	"blacklist": {
+		"defaultValue": "",
+		"dataType"    : "string",
+		"isSensitive" : false,
+		"description" : "A comma separated list of username/userid combo banned from texting Alice. Exemple: Psycho/12345678, Alice/87654321",
+		"category"    : "system",
+		"onUpdate"    : "refreshDatabase"
 	}
 }
