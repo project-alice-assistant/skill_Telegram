@@ -78,7 +78,6 @@ class Telegram(AliceSkill):
 			return False
 
 		self._loop = MessageLoop(self._bot, self.incomingMessage).run_as_thread()
-
 		return super().onBooted()
 
 
@@ -132,10 +131,14 @@ class Telegram(AliceSkill):
 	def incomingMessage(self, message: dict):
 		self.logDebug(f'Incoming message: {message}')
 
-		chatId = message['chat']['id']
-		fromName = message['from']['first_name']
-		fromLastName = message['from']['last_name']
-		date = message['date']
+		try:
+			chatId = message['chat']['id']
+			fromName = message['from']['first_name']
+			date = message['date']
+			fromLastName = message['from'].get('last_name', '')
+		except KeyError:
+			self.logWarning('Invalid message format')
+			return
 
 		# Drop too old messages in case Alice was offline
 		timestamp = int(datetime.now(timezone.utc).timestamp())
