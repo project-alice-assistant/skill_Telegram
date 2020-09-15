@@ -275,7 +275,7 @@ class Telegram(AliceSkill):
 
 
 	def createUserList(self, baseString: str, isBlacklist: bool) -> dict:
-		users: [int, TelegramUser] = dict()
+		users: Dict[int, TelegramUser] = dict()
 		if not baseString:
 			return users
 
