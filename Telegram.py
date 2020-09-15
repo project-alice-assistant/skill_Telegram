@@ -192,20 +192,20 @@ class Telegram(AliceSkill):
 			self.sendMessage(chatId, '😍')
 		elif message['text'] in self.LanguageManager.getStrings('greetingForms', skill=self.name):
 			self.sendMessage(chatId, self.randomTalk(text='greet', replace=[fromName]))
+		else:
+			self._chats.append(siteId)
 
-		self._chats.append(siteId)
+			session = self.DialogManager.newSession(siteId=siteId, user=fromName)
+			session.textOnly = True
 
-		session = self.DialogManager.newSession(siteId=siteId, user=fromName)
-		session.textOnly = True
+			mqttMessage = MQTTMessage()
+			mqttMessage.payload = json.dumps({'sessionId': session.sessionId, 'siteId': siteId, 'text': message['text']})
+			session.extend(message=mqttMessage)
 
-		mqttMessage = MQTTMessage()
-		mqttMessage.payload = json.dumps({'sessionId': session.sessionId, 'siteId': siteId, 'text': message['text']})
-		session.extend(message=mqttMessage)
-
-		self.MqttManager.publish(topic=constants.TOPIC_NLU_QUERY, payload={
-			'input'    : message['text'],
-			'sessionId': session.sessionId
-		})
+			self.MqttManager.publish(topic=constants.TOPIC_NLU_QUERY, payload={
+				'input'    : message['text'],
+				'sessionId': session.sessionId
+			})
 
 
 	def onContinueSession(self, session: DialogSession):
@@ -275,7 +275,7 @@ class Telegram(AliceSkill):
 
 
 	def createUserList(self, baseString: str, isBlacklist: bool) -> dict:
-		users = dict()
+		users: [int, TelegramUser] = dict()
 		if not baseString:
 			return users
 
