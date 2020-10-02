@@ -1,7 +1,5 @@
 {
     "skill": "Telegram",
-    "icon": "time",
-    "description": "Missing description",
     "slotTypes": [],
     "intents": []
 }
