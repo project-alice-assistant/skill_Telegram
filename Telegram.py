@@ -32,7 +32,7 @@ class Telegram(AliceSkill):
 		]
 	}
 
-	_INTENT_ANSWER_YES_OR_NO = Intent('AnswerYesOrNo', isProtected=True)
+	_INTENT_ANSWER_YES_OR_NO = Intent('AnswerYesOrNo')
 
 	def __init__(self):
 
