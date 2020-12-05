@@ -63,6 +63,7 @@ class Telegram(AliceSkill):
 
 		try:
 			self._me = self._bot.getMe()
+
 		except:
 			raise SkillStartingFailed(skillName=self._name, error='Your token seems incorrect')
 
@@ -229,6 +230,9 @@ class Telegram(AliceSkill):
 
 
 	def sendMessage(self, chatId: str, message: str):
+		if not self._bot and not self._me:
+			self._bot = self._bot = telepot.Bot(self.getConfig('token'))
+			self._me = self._bot.getMe()
 		self._bot.sendMessage(chat_id=chatId, text=message)
 
 
