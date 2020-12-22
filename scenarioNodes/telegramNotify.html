@@ -1,0 +1,92 @@
+<!--
+	This is almost a copy of the official Nore-red MQTT out node found on node-red repository.
+	It's been fitted to our needs of simplicity for everyday use and repackaged
+-->
+
+
+<script type="text/javascript">
+	RED.nodes.registerType('telegramNotify', {
+		category: 'Project Alice',
+		color: '#3FADB5',
+		defaults: {
+			broker: {
+				type: 'aliceMqtt',
+				required: true
+			},
+			telegramNotify: {
+				value: '',
+				required: false
+			},
+			client: {
+				value: ''
+			}
+		},
+		inputs: 1,
+		outputs: 0,
+		icon: 'bridge.svg',
+		label: function () {
+			return this.name;
+		}
+	})
+</script>
+
+<script type="text/html" data-help-name="telegramNotify">
+	<p>
+		Send a Telegram notification
+	</p>
+	<h3>Inputs</h3>
+	<dl class="message-properties">
+		<dt>MQTT
+			<span class="property-type">Configured Settings</span>
+		</dt>
+		<dd> This is the MQTT client that will be used.</dd>
+		<dt>Message
+			<span class="property-type">string</span>
+		</dt>
+		<dd> This is the message you want Alice to send. Example: Alarm is now off</dd>
+		<dt class="optional">ChatID <span class="property-type">string</span></dt>
+		<dd> The Telegram chatID to send the message to.</dd>
+	</dl>
+
+	<h3>Details</h3>
+	<p><b>MQTT Broker</b> - The MQTT broker should already be set by default. If you see AliceMqtt as the server
+		name then this is probably setup correctly and no further action is needed by you.</p>
+	<p><b>Message</b> - You have two options with the Message field</p>
+	<ol>
+		<li>Enter the message in this field that you want sent via Telegram <b>EG:</b><code>Just turned on the Air
+			conditioning</code>
+			*NOTE* Having text in this field will override any incoming payload
+		</li>
+		<li>Inject the message using <code>msg.payload.message</code>. This will give you the extra benifit of
+			being able to use the node once in a flow but send different messages.
+		</li>
+		.
+	</ol>
+
+	<p><b>ChatID</b> - The Telegram Chat ID you'd like to notify. Leaving this blank will use the first configured
+		user id from the Telegram skill settings</p>
+
+
+</script>
+
+<script type="text/html" data-template-name="telegramNotify">
+	<div class="form-row">
+		<label for="node-input-broker"><i class="fa fa-bookmark fa-fw"></i> <span
+				data-i18n="telegramNotify.broker">Broker</span></label>
+		<input type="text" id="node-input-broker">
+	</div>
+	<div class="form-row">
+		<div class="form-row">
+			<label for="node-input-telegramNotify"><i class="fa fa-tasks fa-fw"></i> <span
+					data-i18n="telegramNotify.telegramNotify">Message</span></label>
+			<input type="text" id="node-input-telegramNotify">
+		</div>
+	</div>
+	<div class="form-row">
+		<div class="form-row">
+			<label for="node-input-client"><i class="fa fa-map-marker fa-fw"></i> <span
+					data-i18n="telegramNotify.client">Chat ID</span></label>
+			<input type="text" id="node-input-client">
+		</div>
+	</div>
+</script>

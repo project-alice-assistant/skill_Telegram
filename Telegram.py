@@ -13,6 +13,7 @@ from core.base.model.AliceSkill import AliceSkill
 from core.base.model.Intent import Intent
 from core.commons import constants
 from core.dialog.model.DialogSession import DialogSession
+from core.util.Decorators import MqttHandler
 
 
 class Telegram(AliceSkill):
@@ -63,11 +64,12 @@ class Telegram(AliceSkill):
 
 		try:
 			self._me = self._bot.getMe()
+
 		except:
 			raise SkillStartingFailed(skillName=self._name, error='Your token seems incorrect')
 
 		self.loadUsers()
-		self.logInfo(f'Loaded {len(self._users)} user', plural='user')
+		self.logInfo(f'Loaded {len(self._users)} user', plural='users')
 
 
 	def loadUsers(self):
@@ -229,6 +231,9 @@ class Telegram(AliceSkill):
 
 
 	def sendMessage(self, chatId: str, message: str):
+		if not self._bot and not self._me:
+			self._bot = self._bot = telepot.Bot(self.getConfig('token'))
+			self._me = self._bot.getMe()
 		self._bot.sendMessage(chat_id=chatId, text=message)
 
 
@@ -290,3 +295,26 @@ class Telegram(AliceSkill):
 			users[userid] = TelegramUser(username, userid, 1 if isBlacklist else 0)
 
 		return users
+
+
+	# Telegram Node capture
+	@MqttHandler('projectalice/nodered/telegramNotify')
+	def telegramMessage(self, session: DialogSession):
+
+		message = session.payload["message"]["text"]
+		chatID = session.payload["chatID"]
+
+		defaultChatID = ""
+		for key in self._users.keys():
+			if not defaultChatID:
+				defaultChatID = key
+
+		if not chatID:
+			chatID = defaultChatID
+		if not message:
+			message = "No message was provided"
+
+		self.sendMessage(chatId=chatID, message=str(message))
+		self.endSession(
+			sessionId=session.sessionId
+		)
