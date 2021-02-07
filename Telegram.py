@@ -183,7 +183,7 @@ class Telegram(AliceSkill):
 			self.logWarning(f'Blacklisted user texting: {fromName}/{chatId}')
 			return
 
-		siteId = str(chatId)
+		deviceUid = str(chatId)
 
 		# Let's make a couple of funny things :)
 		if message['text'] == '❤':
@@ -195,13 +195,13 @@ class Telegram(AliceSkill):
 		elif message['text'] in self.LanguageManager.getStrings('greetingForms', skill=self.name):
 			self.sendMessage(chatId, self.randomTalk(text='greet', replace=[fromName]))
 		else:
-			self._chats.append(siteId)
+			self._chats.append(deviceUid)
 
-			session = self.DialogManager.newSession(siteId=siteId, user=fromName)
+			session = self.DialogManager.newSession(deviceUid=deviceUid, user=fromName)
 			session.textOnly = True
 
 			mqttMessage = MQTTMessage()
-			mqttMessage.payload = json.dumps({'sessionId': session.sessionId, 'siteId': siteId, 'text': message['text']})
+			mqttMessage.payload = json.dumps({'sessionId': session.sessionId, 'siteId': deviceUid, 'text': message['text']})
 			session.extend(message=mqttMessage)
 
 			self.MqttManager.publish(topic=constants.TOPIC_NLU_QUERY, payload={
@@ -211,23 +211,23 @@ class Telegram(AliceSkill):
 
 
 	def onContinueSession(self, session: DialogSession):
-		if session.siteId not in self._chats:
+		if session.deviceUid not in self._chats:
 			return
 
 		if session.payload.get('text', None):
-			self.sendMessage(session.siteId, session.payload['text'])
+			self.sendMessage(session.deviceUid, session.payload['text'])
 
 
 	def onEndSession(self, session: DialogSession, reason: str = 'nominal'):
-		if session.siteId not in self._chats:
+		if session.deviceUid not in self._chats:
 			return
-		self._chats.remove(session.siteId)
+		self._chats.remove(session.deviceUid)
 
 		if reason != 'nominal':
-			self.sendMessage(session.siteId, self.randomTalk(text='error', skill='system'))
+			self.sendMessage(session.deviceUid, self.randomTalk(text='error', skill='system'))
 		else:
 			if session.payload.get('text', None):
-				self.sendMessage(session.siteId, session.payload['text'])
+				self.sendMessage(session.deviceUid, session.payload['text'])
 
 
 	def sendMessage(self, chatId: str, message: str):
@@ -237,7 +237,7 @@ class Telegram(AliceSkill):
 		self._bot.sendMessage(chat_id=chatId, text=message)
 
 
-	def refreshDatabase(self, value: typing.Any) -> bool:
+	def refreshDatabase(self, _value: typing.Any) -> bool:
 		try:
 			# Only triggered by config update!!
 			whitelisted = self.getConfig('whitelist')
@@ -249,6 +249,7 @@ class Telegram(AliceSkill):
 			# Check if what we have in config is what we have in db
 			# First, did we add a new user into one of the lists?
 			for userid, user in users.items():
+				# noinspection SqlResolve
 				if not self.databaseFetch(tableName='users', query='SELECT * FROM :__table__ WHERE userId = :userId', values={'userId': userid}):
 					# We have a missing user, config was manually changed
 					self.databaseInsert(
