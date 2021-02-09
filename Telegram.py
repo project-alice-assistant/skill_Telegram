@@ -7,6 +7,7 @@ import typing
 from paho.mqtt.client import MQTTMessage
 from telepot.loop import MessageLoop
 
+from core.device.model.DeviceAbility import DeviceAbility
 from .model.TelegramUser import TelegramUser
 from core.ProjectAliceExceptions import SkillStartingFailed
 from core.base.model.AliceSkill import AliceSkill
@@ -166,17 +167,26 @@ class Telegram(AliceSkill):
 		user = self.databaseFetch(tableName='users', query='SELECT * FROM :__table__ WHERE userId = :userId', values={'userId': chatId})
 		if not user:
 			self.logWarning(f'An unknown user texted me! His name and id: {fromName}/{chatId}')
-			if not self.getAliceConfig('disableSoundAndMic'):
-				self.ask(
-					text=self.randomTalk(text='unknownUser', replace=[fromName]),
-					intentFilter=[self._INTENT_ANSWER_YES_OR_NO],
-					currentDialogState='askingToAddNewTelegramUser',
-					customData={
-						'userId': chatId,
-						'fromName': fromName,
-						'fromLastName': fromLastName
-					}
-				)
+			if not self.getAliceConfig('disableSound') and not self.getAliceConfig('disableCapture'):
+				deviceUid = self.DeviceManager.getMainDevice().uid
+			else:
+				device = self.DeviceManager.getDevicesWithAbilities(abilities=[DeviceAbility.NOTIFY])
+				if not device:
+					self.logInfo('Cannot ask for user addition, no device found to do so')
+					return
+				deviceUid = device[-1].uid
+
+			self.ask(
+				deviceUid=deviceUid,
+				text=self.randomTalk(text='unknownUser', replace=[fromName]),
+				intentFilter=[self._INTENT_ANSWER_YES_OR_NO],
+				currentDialogState='askingToAddNewTelegramUser',
+				customData={
+					'userId'      : chatId,
+					'fromName'    : fromName,
+					'fromLastName': fromLastName
+				}
+			)
 			return
 
 		if user['blacklisted'] == 1:
@@ -302,10 +312,10 @@ class Telegram(AliceSkill):
 	@MqttHandler('projectalice/nodered/telegramNotify')
 	def telegramMessage(self, session: DialogSession):
 
-		message = session.payload["message"]["text"]
-		chatID = session.payload["chatID"]
+		message = session.payload['message']['text']
+		chatID = session.payload['chatID']
 
-		defaultChatID = ""
+		defaultChatID = ''
 		for key in self._users.keys():
 			if not defaultChatID:
 				defaultChatID = key
@@ -313,7 +323,7 @@ class Telegram(AliceSkill):
 		if not chatID:
 			chatID = defaultChatID
 		if not message:
-			message = "No message was provided"
+			message = 'No message was provided'
 
 		self.sendMessage(chatId=chatID, message=str(message))
 		self.endSession(
