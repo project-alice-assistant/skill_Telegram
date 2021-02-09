@@ -22,5 +22,9 @@
 		"Salut {}!",
 		"Hello {}!",
 		"Hey {}!"
+	],
+	"sessionTimeout": [
+		"Désolée, la requête à dépassé le temps impartis.",
+		"Réessaie s'il te plait, la requête à dépassé le temps impartis."
 	]
 }

@@ -47,6 +47,7 @@ class Telegram(AliceSkill):
 		self._loop = None
 		self._chats: List = list()
 		self._users = dict()
+		self._usersToSessions: Dict = dict()
 
 		self._INTENT_ANSWER_YES_OR_NO.dialogMapping = {
 			'askingToAddNewTelegramUser': self.answerYesOrNo
@@ -207,12 +208,17 @@ class Telegram(AliceSkill):
 		else:
 			self._chats.append(deviceUid)
 
-			session = self.DialogManager.newSession(deviceUid=deviceUid, user=fromName)
+			if fromName in self._usersToSessions:
+				session = self.DialogManager.getSession(sessionId=self._usersToSessions[fromName])
+			else:
+				session = self.DialogManager.newSession(deviceUid=deviceUid, user=fromName, increaseTimeout=10)
+
 			session.textOnly = True
 
 			mqttMessage = MQTTMessage()
 			mqttMessage.payload = json.dumps({'sessionId': session.sessionId, 'siteId': deviceUid, 'text': message['text']})
 			session.extend(message=mqttMessage)
+			self._usersToSessions[fromName] = session.sessionId
 
 			self.MqttManager.publish(topic=constants.TOPIC_NLU_QUERY, payload={
 				'input'    : message['text'],
@@ -233,11 +239,15 @@ class Telegram(AliceSkill):
 			return
 		self._chats.remove(session.deviceUid)
 
-		if reason != 'nominal':
+		if reason == 'timeout':
+			self.sendMessage(session.deviceUid, self.randomTalk(text='sessionTimeout'))
+		elif reason != 'nominal':
 			self.sendMessage(session.deviceUid, self.randomTalk(text='error', skill='system'))
 		else:
 			if session.payload.get('text', None):
 				self.sendMessage(session.deviceUid, session.payload['text'])
+
+		self._usersToSessions.pop(session.user, None)
 
 
 	def sendMessage(self, chatId: str, message: str):

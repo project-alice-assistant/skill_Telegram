@@ -23,5 +23,9 @@
 		"Hello {}!",
 		"Hi {}!",
 		"Hey {}!"
+	],
+	"sessionTimeout": [
+		"Sorry, your request timed out.",
+		"Please try again, the request timed out."
 	]
 }
