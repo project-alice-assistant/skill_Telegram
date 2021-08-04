@@ -1,22 +1,22 @@
 {
-	"name": "Telegram",
-	"version": "1.5.1",
-	"icon": "fab fa-telegram",
-	"category": "automation",
-	"author": "Psycho",
-	"maintainers": [
-		"lazza"
-	],
-	"desc": "Chat with Alice directly from your mobile device with the `privacy first` app Telegram",
-	"aliceMinVersion": "1.0.0-b5",
-	"systemRequirements": [],
-	"pipRequirements": [
-		"telepot==12.7"
-	],
-	"conditions": {
-		"lang": [
-			"en",
-			"fr"
+    "name": "Telegram",
+    "version": "1.5.2",
+    "icon": "fab fa-telegram",
+    "category": "automation",
+    "author": "Psycho",
+    "maintainers": [
+        "lazza"
+    ],
+    "desc": "Chat with Alice directly from your mobile device with the `privacy first` app Telegram",
+    "aliceMinVersion": "1.0.0-b5",
+    "systemRequirements": [],
+    "pipRequirements": [
+        "telepot==12.7"
+    ],
+    "conditions": {
+        "lang": [
+            "en",
+            "fr"
         ],
         "online": true,
         "asrArbitraryCapture": false
