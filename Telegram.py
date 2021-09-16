@@ -75,7 +75,7 @@ class Telegram(AliceSkill):
 
 
 	def loadUsers(self):
-		users = self.databaseFetch(tableName='users', query='SELECT * FROM :__table__', method='all')
+		users = self.databaseFetch(tableName='users', query='SELECT * FROM :__table__')
 		self._users = {user['userId']: user for user in users if users}
 
 
@@ -190,7 +190,7 @@ class Telegram(AliceSkill):
 			)
 			return
 
-		if user['blacklisted'] == 1:
+		if user[0]['blacklisted'] == 1:
 			self.logWarning(f'Blacklisted user texting: {fromName}/{chatId}')
 			return
 
@@ -283,7 +283,7 @@ class Telegram(AliceSkill):
 					)
 
 			# Or did we remove one?
-			for user in self.databaseFetch(tableName='users', query='SELECT * FROM :__table__', method='all'):
+			for user in self.databaseFetch(tableName='users', query='SELECT * FROM :__table__'):
 				if (user['blacklisted'] == 1 and user['userId'] not in blacklist) or (user['blacklisted'] == 0 and user['userId'] not in whitelist):
 					# We have a removed user, config was manually changed
 					self.DatabaseManager.delete(

@@ -1,6 +1,6 @@
 {
     "name": "Telegram",
-    "version": "1.5.3",
+    "version": "1.5.4",
     "icon": "fab fa-telegram",
     "category": "automation",
     "author": "Psycho",
@@ -8,7 +8,7 @@
         "lazza"
     ],
     "desc": "Chat with Alice directly from your mobile device with the `privacy first` app Telegram",
-    "aliceMinVersion": "1.0.0-b5",
+    "aliceMinVersion": "1.0.0-rc1",
     "systemRequirements": [],
     "pipRequirements": [
         "telepot==12.7"
