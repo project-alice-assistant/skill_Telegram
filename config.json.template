@@ -10,7 +10,7 @@
 		"defaultValue": "",
 		"dataType"    : "string",
 		"isSensitive" : false,
-		"description" : "A comma separated list of username/userid combo allowed to text Alice. Exemple: Psycho/12345678, Alice/87654321",
+		"description" : "A comma separated list of username/userid combo allowed to text Alice. Example: Psycho/12345678, Alice/87654321",
 		"category"    : "system",
 		"onUpdate"    : "refreshDatabase"
 	},
@@ -18,8 +18,22 @@
 		"defaultValue": "",
 		"dataType"    : "string",
 		"isSensitive" : false,
-		"description" : "A comma separated list of username/userid combo banned from texting Alice. Exemple: Psycho/12345678, Alice/87654321",
+		"description" : "A comma separated list of username/userid combo banned from texting Alice. Example: Psycho/12345678, Alice/87654321",
 		"category"    : "system",
 		"onUpdate"    : "refreshDatabase"
+	},
+	"emergencyContact": {
+		"defaultValue": "",
+		"dataType"    : "string",
+		"isSensitive" : false,
+		"description" : "A comma separated list of username/userid combo set as your emergency contact. Example: sue/12345678, bob/87654321",
+		"category"    : "system"
+	},
+	"confirmEmergencyCall": {
+		"defaultValue": true,
+		"dataType"    : "boolean",
+		"isSensitive" : false,
+		"description" : "Asks for confirmation before sending a emergency message",
+		"category"    : "system"
 	}
 }

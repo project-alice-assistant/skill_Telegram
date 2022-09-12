@@ -6,6 +6,7 @@ import telepot
 import typing
 from paho.mqtt.client import MQTTMessage
 from telepot.loop import MessageLoop
+from core.util.Decorators import IntentHandler
 
 from core.device.model.DeviceAbility import DeviceAbility
 from .model.TelegramUser import TelegramUser
@@ -50,7 +51,8 @@ class Telegram(AliceSkill):
 		self._usersToSessions: Dict = dict()
 
 		self._INTENT_ANSWER_YES_OR_NO.dialogMapping = {
-			'askingToAddNewTelegramUser': self.answerYesOrNo
+			'askingToAddNewTelegramUser': self.answerYesOrNo,
+			'sendEmergencyContact' : self.emergencyConfirmationAction
 		}
 
 		super().__init__(self._INTENTS, self.DATABASE)
@@ -339,3 +341,40 @@ class Telegram(AliceSkill):
 		self.endSession(
 			sessionId=session.sessionId
 		)
+
+	# # # # Below code is for the emergency call feature # # # #
+	@IntentHandler('emergencyCall')
+	def callEmergencyContact(self, session: DialogSession, **_kwargs):
+		if self.getConfig('emergencyContact'):
+
+			if self.getConfig("confirmEmergencyCall"):
+				self.continueDialog(
+					sessionId=session.sessionId,
+					text=self.randomTalk(text='confirmEmergencyHelp'),
+					intentFilter=[self._INTENT_ANSWER_YES_OR_NO],
+					currentDialogState='sendEmergencyContact',
+					probabilityThreshold=0.1
+				)
+			else:
+				self.emergencyConfirmationAction(session)
+	def emergencyConfirmationAction(self, session):
+		eList = self.getConfig('emergencyContact')
+		emergencyContactList = self.createUserList(eList, False)
+		users: Dict[int, TelegramUser] = {**emergencyContactList}
+
+		if self.Commons.isYes(session):
+
+			for userid, user in users.items():
+				self.sendMessage(chatId=str(userid), message=self.randomTalk(text='helpMessage', replace=[user.username, session.customData['user'] ]))
+
+			self.endDialog(
+				sessionId=session.sessionId,
+				text=self.randomTalk(text='sentEmergencyMessage'),
+				deviceUid=session.deviceUid
+			)
+		else:
+			self.endDialog(
+				sessionId=session.sessionId,
+				text=self.randomTalk(text='notSendingMessage'),
+				deviceUid=session.deviceUid
+			)
