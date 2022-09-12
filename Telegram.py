@@ -357,6 +357,9 @@ class Telegram(AliceSkill):
 				)
 			else:
 				self.emergencyConfirmationAction(session)
+		else:
+			self.logWarning('No emergency contacts listed')
+			self.endSession(sessionId=session.sessionId)
 
 
 	def emergencyConfirmationAction(self, session):
