@@ -357,6 +357,8 @@ class Telegram(AliceSkill):
 				)
 			else:
 				self.emergencyConfirmationAction(session)
+
+
 	def emergencyConfirmationAction(self, session):
 		eList = self.getConfig('emergencyContact')
 		emergencyContactList = self.createUserList(eList, False)
