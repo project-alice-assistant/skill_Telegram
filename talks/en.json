@@ -27,23 +27,5 @@
 	"sessionTimeout": [
 		"Sorry, your request timed out.",
 		"Please try again, the request timed out."
-	],
-	"sentEmergencyMessage": [
-		"Stay with me, Help is hopefully on it's way. I have sent a message to your emergency contacts",
-		"I have notified your emergency contact list",
-		"Message has been sent to your emergency contacts, Stay safe until they turn up"
-	],
-	"notSendingMessage": [
-		"ok, I've cancelled sending a message",
-		"I have not sent a message to your emergency contacts",
-		"Cancelled sending a message to your contacts. Glad your safe"
-	],
-	"helpMessage": [
-		"Hi {0}, Please visit {1} immediately, they have requested help and may be hurt",
-		"ATTENTION {0}. {1} has had a accident at home and is requesting immediate help.",
-		"{0} - {1} has requested immediate help, something has happened at home and they need assistance NOW"
-	],
-	"confirmEmergencyHelp": [
-		"Do you want me to send your emergency contacts a help message ?"
 	]
 }
