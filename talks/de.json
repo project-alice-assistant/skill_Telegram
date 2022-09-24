@@ -1,0 +1,31 @@
+{
+	"unknownUser": [
+		"Eine unbekannte Person schreibt mir! Der Name ist \"{}\". Soll ich Nachrichten von diesem Nutzer erlauben?",
+		"Ich habe eine Nachricht von einem unbekannten Nutzer erhalnte. Soll ich \"{}\" auf meine Liste setzen?",
+		"Ich habe eine Nachricht von \"{}\" erhalten. Ich weiß aber nicht wer das ist. Soll ich mir den Nutzer merken?"
+	],
+	"okAdded": [
+		"Ok, ich merke mir den Nutzer.",
+		"Sicher, ich setze den Nutzer auf die Whitelist.",
+		"Erledigt!"
+	],
+	"okNotAdded": [
+		"Sicher, von dem Nutzer empfange ich keine Nachrichten mehr.",
+		"Ok, keine Nachrichten von diesem Nutzer."
+	],
+	"whitelisted": [
+		"Hallo {}! Du wurdest mir eben vorgestellt, ich darf jetzt mit dir schreiben!"
+	],
+	"blacklisted": [
+		"{}... Du stehst auf meiner schwarzen Liste, mit dir rede ich nicht! Schreibe mich bitte nicht wieder an!"
+	],
+	"greet": [
+		"Hallo {}!",
+		"Hi {}!",
+		"Hey {}!"
+	],
+	"sessionTimeout": [
+		"Entschuldigung. Deine Anfrage ist abgelaufen.",
+		"Bitte versuche es erneut, deine Zeit ist abgelaufen."
+	]
+}

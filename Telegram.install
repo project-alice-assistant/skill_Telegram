@@ -16,7 +16,8 @@
     "conditions": {
         "lang": [
             "en",
-            "fr"
+            "fr",
+            "de"
         ],
         "online": true,
         "asrArbitraryCapture": false
