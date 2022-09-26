@@ -249,7 +249,6 @@ class Telegram(AliceSkill):
 
 		self._usersToSessions.pop(session.user, None)
 
-
 	def sendMessage(self, chatId: str, message: str):
 		if not self._bot and not self._me:
 			self._bot = self._bot = telepot.Bot(self.getConfig('token'))
@@ -339,3 +338,16 @@ class Telegram(AliceSkill):
 		self.endSession(
 			sessionId=session.sessionId
 		)
+
+	def onSessionTimeout(self, session):
+		"""
+		if session times out, cleanout the relevant usersToSession
+		"""
+		super().onSessionTimeout(session)
+		if session.deviceUid not in self._chats:
+			return
+		self._chats.remove(session.deviceUid)
+
+		if session.user in self._usersToSessions:
+			self.sendMessage(session.deviceUid, self.randomTalk(text='sessionTimeout'))
+			self._usersToSessions.pop(session.user, None)
